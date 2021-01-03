@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let todoSelected: bool = true;
+  export let todoSelected: boolean = true;
 </script>
 
 <style>

@@ -1,10 +1,12 @@
 <script lang="ts">
+  import type { ITodo } from './model'
+
   import Line from './Line.svelte'
   import Input from './Input.svelte'
   import Selector from './Selector.svelte'
   import Todo from './Todo.svelte'
 
-  const todos = []
+  const todos: Array<ITodo> = []
 </script>
 
 <style>
@@ -55,7 +57,7 @@
     {#each todos as todo (todo.id)}
       <Todo {todo} />
     {:else}
-      <Todo todo={{ text: 'Create todo', done: false }} />
+      <Todo todo={{ text: 'Create todo', done: false, id: 0 }} />
     {/each}
   </div>
 </main>

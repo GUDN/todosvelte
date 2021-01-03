@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let todo
+  import type { ITodo } from './model'
+
+  export let todo: ITodo
 
   $: button_text = (todo && todo.done) ? 'Undo' : 'Done'
 </script>
