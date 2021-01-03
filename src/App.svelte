@@ -1,11 +1,17 @@
 <script lang="ts">
-  import type { ITodo } from './model'
+  import { Todo } from './model'
 
   import Input from './Input.svelte'
   import Selector from './Selector.svelte'
-  import Todo from './Todo.svelte'
+  import { default as TodoRenderer } from './Todo.svelte'
 
-  const todos: Array<ITodo> = []
+  let todos: Array<Todo> = []
+  let todoSelected = true
+
+  function addTodo(text: string) {
+    const todo = new Todo(text)
+    todos = [...todos, todo]
+  }
 </script>
 
 <style>
@@ -42,21 +48,43 @@
     border: 1px solid #000000;
     border-radius: 10px;
   }
+
+  p {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 10px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    font-family: Roboto;
+    font-size: 52px;
+
+    color: black;
+
+    background: #EFEFEF;
+    border-radius: 10px;
+  }
 </style>
 
 <main>
   <h1>Todos</h1>
   <hr />
-  <Input />
+  <Input on:addTodo={e => addTodo(e.detail)} />
   <hr />
 
-  <Selector />
+  <Selector bind:todoSelected />
 
   <div>
     {#each todos as todo (todo.id)}
-      <Todo {todo} />
+      {#if todo.done === !todoSelected}
+        <TodoRenderer
+          {todo}
+          on:statusUpdate={() => todos = todos}
+        />
+      {/if}
     {:else}
-      <Todo todo={{ text: 'Create todo', done: false, id: 0 }} />
+      <p>Create todo</p>
     {/each}
   </div>
 </main>

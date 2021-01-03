@@ -1,3 +1,17 @@
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
+  let value: string = ''
+  let submitButton: HTMLElement
+  const dispatch = createEventDispatcher()
+
+  function onSubmit() {
+    if (value) dispatch('addTodo', value)
+    value = ''
+    submitButton.blur()
+  }
+</script>
+
 <style>
   input {
     width: 80%;
@@ -52,7 +66,7 @@
   }
 </style>
 
-<form on:submit|preventDefault>
-  <input placeholder="Enter new todo" />
-  <button type="submit">ADD</button>
+<form on:submit|preventDefault={onSubmit}>
+  <input placeholder="Enter new todo" bind:value />
+  <button type="submit" bind:this={submitButton}>ADD</button>
 </form>

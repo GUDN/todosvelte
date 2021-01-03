@@ -1,9 +1,19 @@
 <script lang="ts">
-  import type { ITodo } from './model'
+  import { createEventDispatcher } from 'svelte'
+  import type { Todo } from './model'
 
-  export let todo: ITodo
+  const dispatch = createEventDispatcher()
+  export let todo: Todo
+
+  let updateButton: HTMLElement
 
   $: button_text = (todo && todo.done) ? 'Undo' : 'Done'
+
+  function onClick() {
+    todo.done = !todo.done
+    dispatch('statusUpdate')
+    updateButton.blur()
+  }
 </script>
 
 <style>
@@ -62,5 +72,11 @@
 {#if !todo}
   <div>Argument is undefined</div>
 {:else}
-  <div><span>{todo.text}</span><button>{button_text}</button></div>
+  <div>
+    <span>{todo.text}</span>
+    <button
+      bind:this={updateButton}
+      on:click={onClick}
+    >{button_text}</button>
+  </div>
 {/if}

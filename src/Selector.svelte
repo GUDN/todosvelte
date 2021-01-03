@@ -48,7 +48,19 @@
 </style>
 
 <div>
-  <button class:active={todoSelected}>Todo</button>
+  <button
+    class:active={todoSelected}
+    on:click={e => {
+      todoSelected = true
+      if (e.target instanceof HTMLElement) e.target.blur()
+    }}
+  >Todo</button>
   <span></span>
-  <button class:active={!todoSelected}>Done</button>
+  <button
+    class:active={!todoSelected}
+    on:click={e => {
+      todoSelected = false
+      if (e.target instanceof HTMLElement) e.target.blur()
+    }}
+  >Done</button>
 </div>
