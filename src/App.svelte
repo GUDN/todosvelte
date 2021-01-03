@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { ITodo } from './model'
 
-  import Line from './Line.svelte'
   import Input from './Input.svelte'
   import Selector from './Selector.svelte'
   import Todo from './Todo.svelte'
@@ -47,9 +46,9 @@
 
 <main>
   <h1>Todos</h1>
-  <Line />
+  <hr />
   <Input />
-  <Line />
+  <hr />
 
   <Selector />
 
