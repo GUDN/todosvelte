@@ -4,22 +4,58 @@
   import Selector from './Selector.svelte'
   import Todo from './Todo.svelte'
 
-  const todos = [
-    {id: 1, text: 'Todo 1', done: false},
-    {id: 2, text: 'Todo 2', done: false},
-    {id: 3, text: 'Todo 3', done: false},
-  ]
+  const todos = []
 </script>
 
-<h1>Todos</h1>
-<Line />
-<Input />
-<Line />
+<style>
+  main {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 50px;
 
-<Selector />
+    width: 80%;
+    height: auto;
+  }
 
-<div class="wrapper">
-  {#each todos as todo (todo.id)}
-    <Todo {todo} />
-  {/each}
-</div>
+  h1 {
+    width: 100%;
+    text-align: center;
+
+    font-family: Roboto;
+    line-height: 84px;
+    font-size: 72px;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+  }
+
+  div {
+    margin-top: 10px;
+    padding: 10px;
+    padding-bottom: 0px;
+
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+
+    border: 1px solid #000000;
+    border-radius: 10px;
+  }
+</style>
+
+<main>
+  <h1>Todos</h1>
+  <Line />
+  <Input />
+  <Line />
+
+  <Selector />
+
+  <div>
+    {#each todos as todo (todo.id)}
+      <Todo {todo} />
+    {:else}
+      <Todo todo={{ text: 'Create todo', done: false }} />
+    {/each}
+  </div>
+</main>
