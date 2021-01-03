@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Todo } from './model'
+  import { onMount } from 'svelte'
+  import { fetchTodos, initDatabase, Todo } from './model'
 
   import Input from './Input.svelte'
   import Selector from './Selector.svelte'
@@ -8,9 +9,21 @@
   let todos: Array<Todo> = []
   let todoSelected = true
 
+  onMount(async () => {
+    await initDatabase()
+    todos = await fetchTodos()
+  })
+
   function addTodo(text: string) {
     const todo = new Todo(text)
     todos = [...todos, todo]
+  }
+
+  async function clear() {
+    for (const todo of todos.filter(todo => todo.done !== todoSelected)) {
+      await todo.delete()
+    }
+    todos = todos.filter(todo => todo.done === todoSelected)
   }
 </script>
 
@@ -73,11 +86,11 @@
   <Input on:addTodo={e => addTodo(e.detail)} />
   <hr />
 
-  <Selector bind:todoSelected />
+  <Selector bind:todoSelected on:clear={clear} />
 
   <div>
     {#each todos as todo (todo.id)}
-      {#if todo.done === !todoSelected}
+      {#if todo.done !== todoSelected}
         <TodoRenderer
           {todo}
           on:statusUpdate={() => todos = todos}

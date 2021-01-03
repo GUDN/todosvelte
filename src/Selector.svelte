@@ -1,14 +1,27 @@
 <script lang="ts">
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher()
   export let todoSelected: boolean = true;
+
+  function onClear(e: Event) {
+    dispatch('clear')
+    if (e.target instanceof HTMLElement) e.target.blur()
+  }
 </script>
 
 <style>
-  div {
+  .wrapper {
     width: 100%;
     height: 61px;
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+  }
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
   }
 
   button {
@@ -47,20 +60,23 @@
   }
 </style>
 
-<div>
-  <button
-    class:active={todoSelected}
-    on:click={e => {
-      todoSelected = true
-      if (e.target instanceof HTMLElement) e.target.blur()
-    }}
-  >Todo</button>
-  <span></span>
-  <button
-    class:active={!todoSelected}
-    on:click={e => {
-      todoSelected = false
-      if (e.target instanceof HTMLElement) e.target.blur()
-    }}
-  >Done</button>
+<div class="wrapper">
+  <button class="clear" on:click={onClear}>Clear</button>
+  <div class="inner">
+    <button
+      class:active={todoSelected}
+      on:click={e => {
+        todoSelected = true
+        if (e.target instanceof HTMLElement) e.target.blur()
+      }}
+    >Todo</button>
+    <span></span>
+    <button
+      class:active={!todoSelected}
+      on:click={e => {
+        todoSelected = false
+        if (e.target instanceof HTMLElement) e.target.blur()
+      }}
+    >Done</button>
+  </div>
 </div>
