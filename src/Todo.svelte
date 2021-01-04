@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
+  import { slide } from 'svelte/transition'
   import type { Todo } from './model'
 
   const dispatch = createEventDispatcher()
@@ -72,7 +73,7 @@
 {#if !todo}
   <div>Argument is undefined</div>
 {:else}
-  <div>
+  <div transition:slide>
     <span>{todo.text}</span>
     <button
       bind:this={updateButton}
